@@ -8,8 +8,11 @@
         "build": "tsc -b && vite build",
         "lint": "eslint  --ignore-path .gitignore .",
         "lint:fix": "eslint  --fix --ignore-path .gitignore .",
+        "eslint-output": "eslint-output ./src --ext .tsx --ext .ts --max-warnings 0",
+        "format": "prettier --config .prettierrc --write src/**/*.{ts,tsx}",
         "preview": "vite preview",
         "test": "jest --watch --config=jest.config.js",
+        "test:cov": "jest --coverage --config=jest.config.js",
         "cy:open": "cypress open",
         "cy:run": "cypress run"
     },
