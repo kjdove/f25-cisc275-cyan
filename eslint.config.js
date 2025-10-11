@@ -11,13 +11,19 @@ export default defineConfig([
         files: ["**/*.{ts,tsx}"],
         extends: [
             js.configs.recommended,
-            tseslint.configs.recommended,
+            ...tseslint.configs.recommendedTypeChecked,
             reactHooks.configs["recommended-latest"],
             reactRefresh.configs.vite,
         ],
         languageOptions: {
             ecmaVersion: 2020,
             globals: globals.browser,
+            parserOptions: {
+                // For typescript-eslint v8+
+                projectService: true,
+                // If you're on v7 or earlier, use: project: true
+                tsconfigRootDir: import.meta.dirname,
+            },
         },
         rules: {
             // https://stackoverflow.com/questions/57802057/eslint-configuring-no-unused-vars-for-typescript
@@ -44,7 +50,7 @@ export default defineConfig([
             // Disallow returning a value with type any from a function.
             "@typescript-eslint/no-unsafe-return": "error",
 
-            // https://typescript-eslint.io/rules/ban-types
+            // https://typescript-eslint.io/rules/no-restricted-types
             // Disallow certain types.
             "@typescript-eslint/no-restricted-types": [
                 "error",
@@ -67,7 +73,10 @@ export default defineConfig([
 
             // https://typescript-eslint.io/rules/no-confusing-void-expression
             // Require expressions of type void to appear in statement position.
-            "@typescript-eslint/no-confusing-void-expression": "error",
+            "@typescript-eslint/no-confusing-void-expression": [
+                "error",
+                { ignoreArrowShorthand: true },
+            ],
 
             // https://typescript-eslint.io/rules/no-for-in-array
             // Disallow iterating over an array with a for-in loop. (Force for-of instead!)
