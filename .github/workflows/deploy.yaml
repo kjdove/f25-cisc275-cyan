@@ -146,7 +146,7 @@ jobs:
               id: test
               run: |
                   echo "<html><body><pre>" > ./dist/tests.html
-                  npm test -- --coverage |& tee -a ./dist/tests.html
+                  npm run test:cov |& tee -a ./dist/tests.html
                   echo "</pre></body></html>" >> ./dist/tests.html
                   echo "* [Tests](../tests.html)" >> docs/dashboard.md
 
