@@ -90,12 +90,11 @@ jobs:
 
                   printf 'Successfully created dashboard file\n' >> ./dist/_build_log.txt
 
-            - name: Update package.json homepage
-              uses: jossef/action-set-json-field@v1
-              with:
-                  file: package.json
-                  field: homepage
-                  value: ${{ steps.get-repo-values.outputs.url }}
+            - id: compute-base
+              name: Compute base path
+              run: |
+                  repo="${GITHUB_REPOSITORY#*/}"   # owner/repo -> repo
+                  echo "base=/$repo/" >> $GITHUB_OUTPUT
 
             # create_redirects
             - name: Create Redirects and Links
@@ -135,7 +134,7 @@ jobs:
               id: build
               run: |
                   echo "<html><body><pre>" > ./dist/build.html
-                  npm run build |& tee -a ./dist/build.html
+                  npm run build -- --base "${{ steps.compute-base.outputs.base }}" |& tee -a ./dist/build.html
                   echo "</pre></body></html>" >> ./dist/build.html
                   echo "* [Build](../build.html)" >> docs/dashboard.md
 
