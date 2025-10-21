@@ -9,6 +9,7 @@ export function App() {
     return (
         <>
             <div>Kacey Dove</div>
+            <div>Anthony Nittoly</div>
             <div>
 
                 <div> Ava Natale </div>
